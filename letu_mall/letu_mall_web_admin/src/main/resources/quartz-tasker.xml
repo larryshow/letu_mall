@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+	                      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	                      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd         
+	                      http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd         
+	                      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+ 	<bean id="wtBldglIncomeJob" class="com.qtz.sm.wallet.job.WtBldglIncomeJob" />
+ 	<bean id="wtBldIncomeJob" class="com.qtz.sm.wallet.job.WtBldIncomeJob" />
+ 	<bean id="wtCczxIncomeJob" class="com.qtz.sm.wallet.job.WtCczxIncomeJob" />
+ 	<bean id="wtCsIncomeJob" class="com.qtz.sm.wallet.job.WtCsIncomeJob" />
+ 	<bean id="wtGylIncomeJob" class="com.qtz.sm.wallet.job.WtGylIncomeJob" />
+ 	<bean id="wtGysIncomeJob" class="com.qtz.sm.wallet.job.WtGysIncomeJob" />
+ 	<bean id="wtYccBldglIncomeJob" class="com.qtz.sm.wallet.job.WtYccBldglIncomeJob" />
+ 	<bean id="wtYccCsIncomeJob" class="com.qtz.sm.wallet.job.WtYccCsIncomeJob" />
+ 	
+ 	<!-- 便利店管理公司收入结算定时任务 =========== -->
+ 	<!-- 注册定时器 -->
+ 	<bean id="wtBldglIncomeJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+ 		<!-- 指定要执行的定时任务类，这里是weekRrefreshOrderStateTasker -->
+ 		<property name="targetObject">
+ 			<ref bean="wtBldglIncomeJob"/>
+ 		</property>
+ 		<!-- 指定定时器任务类要执行的方法名称这里是execute -->
+ 		<property name="targetMethod">
+ 			<value>run</value>
+ 		</property>
+ 	</bean>
+ 	<!-- 配置定时器任务的调试器 -->
+ 	<bean id="wtBldglIncomeJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+ 		<!-- 声明要运行的实体 -->
+ 		<property name="jobDetail">
+ 			<ref bean="wtBldglIncomeJobDetail"/>
+ 		</property>
+ 		<!--  设置运行时间  0 */1 * * * ?   0 0 */3 * * ? -->
+ 		<!--  [秒] [分] [小时] [日] [月] [周] [年] -->
+ 		<property name="cronExpression">
+ 			<value>0 */5 * * * ?</value>
+ 		</property>
+ 	</bean>
+ 	<!-- ======================end====================== -->
+ 	
+ 	<!-- 注册监听器 -->
+	<bean id="registerQuartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 注册定时器实体集合 -->
+		<property name="triggers">
+			<list>
+<!-- 				<ref bean="wtBldglIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtBldIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtCczxIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtCsIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtGylIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtGysIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtYccBldglIncomeJobTrigger"/> -->
+<!-- 				<ref bean="wtYccCsIncomeJobTrigger"/> -->
+			</list>
+		</property>	
+	</bean>
+	
+</beans>
